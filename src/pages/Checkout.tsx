@@ -153,7 +153,7 @@ const Checkout = () => {
       if (!order) return;
       const { orderId } = order;
       try {
-        const stripe = await stripePromise;
+        await stripePromise;
         const { data } = await axios.post(
           `${utilsService}/api/payment/stripe/create`,
           {
@@ -161,11 +161,10 @@ const Checkout = () => {
           },
         );
 
-        if(data.url){
-          window.location.href = data.url
-        }
-        else{
-          toast.error("Failed to create payment session")
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          toast.error("Failed to create payment session");
         }
       } catch (error) {
         toast.error("Failed to initialize stripe");
